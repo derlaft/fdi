@@ -15,6 +15,17 @@ proc revisited(req: Request): bool =
   except:
     false
 
+import httpclient
+proc remoteLog(a: string): bool =
+  try:
+    let res = request(url=logURL % (%%a), timeout=defaultTimeout).body
+    if res.contains("ok"):
+      true
+    else:
+      false
+  except:
+    false
+
 proc redirectedFrom(request: Request): string =
   # https redirects do not work %) so assumming http
   "http://$1:$2$3" % [request.host, $request.port, request.path]
@@ -54,6 +65,8 @@ routes:
   # redirect rule (any transparent-proxied URL will be redirected to our host 
   get re".*":
     cond thisHost false
+    headers["Cache-Control"] = "no-store"
+    headers["Connection"] = "close"
     redirect "http://$1/?from=$2" % [config.gatewayHost, %%(redirectedFrom request)]
 
   # oauth step1 (redirect to outside login page)
@@ -93,6 +106,12 @@ routes:
       if auth.Primary: # save identity
         setCookie("id", res.id, daysForward(365 * 5))
         setCookie("sign", cryptoHash(res.id), daysForward(365 * 5))
+        if not remoteLog("Id: $1;\t\t\t\t\tIp addr: $2" % [res.id, request.ip]):
+          redirect errorRedirect "Could not log"
+      else:
+        if not remoteLog("Id: $1;\tSecondary Id: $2;\tIp addr: $3" % [request.cookies["id"], res.id, request.ip]):
+          redirect errorRedirect "Could not log"
+
       # success! allow internet access and all the stuff
       allowInternetAccess request.ip
 
