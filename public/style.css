@@ -1,0 +1,42 @@
+html {
+    width: 90%;
+    max-width: 400px;
+    margin: 0 auto; 
+    -webkit-text-size-adjust: none;
+    text-align: center;
+}
+
+input {
+    text-align: center;
+    font-size: 1.5em;
+    margin-top: 0;
+}
+
+input.phone, input.code {
+    width: 80%;
+    margin-bottom: 0.33em;
+}
+
+.error {
+    border: thin solid #8b0000;
+    background: #ffc0cb;
+    margin: 20px;
+    padding: 20px;
+}
+
+#phone-cap {
+    margin-bottom: 10px;
+}
+
+#img {
+  height: 10em;
+  margin-bottom: 20px;
+}
+
+img {
+  height: 100%;
+}
+
+.snimg {
+    height: 5em;
+}

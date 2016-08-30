@@ -33,7 +33,9 @@ proc sendSMS(phone, message: string): SmsSendResult =
       timeout=defaultTimeout
     ).body
 
-    if resp.startsWith("accepted;"):
+    D("Sending SMS resp: $1" % resp)
+
+    if resp.contains("accepted"):
       SmsSendResult(success: true, message: resp)
     else:
       SmsSendResult(success: false, message: resp)
@@ -64,7 +66,7 @@ proc getSMSRedirect(parameters: StringTableRef): Redirect {.procvar.} =
 
   # checker result
   if res.success:
-    Redirect(url: "http://$1/sms_callback" % gatewayHost)
+    Redirect(url: "http://$1/sms_code?phone=$2" % [gatewayHost, phone])
   else:
     Redirect(error: res.message)
 
