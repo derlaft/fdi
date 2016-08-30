@@ -1,0 +1,5 @@
+/nimcache
+/ncache
+/main
+*.exvim*
+gateway.cfg
