@@ -1,4 +1,4 @@
-import ./jester, asyncdispatch, re, strutils, random, times
+import jester, asyncdispatch, re, strutils, random, times
 
 import ./inc/config, ./inc/util, ./inc/html
 
