@@ -127,4 +127,6 @@ routes:
       resp html.smsCode(@"phone", @"error")
 
 randomize() # make sure codes are always different
+
+discard remoteLog("Starting service")
 runForever()
