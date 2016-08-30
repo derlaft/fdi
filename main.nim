@@ -1,4 +1,4 @@
-import jester, asyncdispatch, re, strutils, random, times
+import ./jester, asyncdispatch, re, strutils, random, times
 
 import ./inc/config, ./inc/util, ./inc/html
 
@@ -15,11 +15,18 @@ proc revisited(req: Request): bool =
   except:
     false
 
+proc redirectedFrom(request: Request): string =
+  # https redirects do not work %) so assumming http
+  "http://$1:$2$3" % [request.host, $request.port, request.path]
+
 var methods = initTable[string, Method]()
 
 when SMS_ENABLED:
   import ./inc/sms
   methods["sms"] = SMS_METHOD
+
+  proc errorSMSRedirect (phone, err: string): string =
+    "http://$1/sms_code?phone=$2&error=$3" % [gatewayHost, phone, %%err]
 
 when FB_ENABLED:
   import ./inc/fb
@@ -35,6 +42,9 @@ when OK_ENABLED:
 
 routes:
   get "/":
+    if request.params.hasKey("from"):
+      setCookie("from", @"from", daysForward(1))
+
     cond thisHost
     resp html.mainPage(pageCtx(
       error: @"error",
@@ -44,7 +54,7 @@ routes:
   # redirect rule (any transparent-proxied URL will be redirected to our host 
   get re".*":
     cond thisHost false
-    redirect "http://$1/" % config.gatewayHost
+    redirect "http://$1/?from=$2" % [config.gatewayHost, %%(redirectedFrom request)]
 
   # oauth step1 (redirect to outside login page)
   get re"^\/(.*)_redirect$":
@@ -73,20 +83,29 @@ routes:
 
     let res = auth.CheckCode(request.params)
     if res.error != nil:
+      # sms need another page
+      when SMS_ENABLED:
+        if request.matches[0] == "sms":
+          redirect errorSMSRedirect(@"phone", res.error)
+
       redirect errorRedirect res.error
     else:
-      # save identity
-      setCookie("id", res.id, daysForward(365 * 5))
-      setCookie("sign", cryptoHash(res.id), daysForward(365 * 5))
+      if auth.Primary: # save identity
+        setCookie("id", res.id, daysForward(365 * 5))
+        setCookie("sign", cryptoHash(res.id), daysForward(365 * 5))
       # success! allow internet access and all the stuff
       allowInternetAccess request.ip
-      redirect website
+
+      if request.cookies.hasKey("from"):
+        redirect request.cookies["from"]
+      else:
+        redirect website
 
   # we are self SMS-oauth provider -- serve code enter page
   get "/sms_code":
     when SMS_ENABLED: # save binary size if it's disabled
       cond smsEnabled
-      resp html.smsCode(@"phone")
+      resp html.smsCode(@"phone", @"error")
 
 randomize() # make sure codes are always different
 runForever()

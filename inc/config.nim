@@ -18,7 +18,7 @@ let
   zone* = CFG.getSectionValue("Gateway", "zone")
 
   errorPageLocation* = "http://$1/?error=" % gatewayHost
-  smsErrorPageLocation* = "http://$1/do_sms?error=" % gatewayHost
+  smsErrorPageLocation* = "http://$1/sms_code?error=" % gatewayHost
 
   smsEnabled* = SMS_ENABLED and parseBool(CFG.getSectionValue("SMS", "enabled"))
   vkEnabled* = VK_ENABLED and parseBool(CFG.getSectionValue("VK", "enabled"))

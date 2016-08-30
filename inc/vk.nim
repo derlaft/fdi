@@ -43,5 +43,5 @@ let
     CheckCode: doVkCheck,
     Enabled: vkEnabled,
     Primary: true,
-    Hosts: @["oauth.vk.com", "m.vk.com"],
+    Hosts: @["oauth.vk.com", "m.vk.com", "login.vk.com"],
   )

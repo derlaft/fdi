@@ -88,13 +88,15 @@ $header
 $footer
 """
 
-proc smsCode*(phone: string): string = tmpli html"""
+proc smsCode*(phone, error: string): string = tmpli html"""
 $header
   <div id="class">
-    <div class="error">
-      <span> Ошибка! Неправильный код </span>
-      <!--  -->
-    </div>
+    $if error != "" {
+      <div class="error">
+        <span> Ошибка! Неправильный код </span>
+        <!--  -->
+      </div>
+    }
     <p>Введите код, отправленный при помоши SMS-сообщения:</p>
     <form action="/sms_callback" method="get">
         <input name="phone" type="hidden" value="$phone">

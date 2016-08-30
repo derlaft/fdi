@@ -65,5 +65,5 @@ let
     CheckCode: doOkCheck,
     Enabled: okEnabled,
     Primary: true,
-    Hosts: @["connect.ok.ru", "ok.ru"],
+    Hosts: @["connect.ok.ru", "st.mycdn.me"],
   )

@@ -1,10 +1,12 @@
 #!/bin/sh
 
+CROSS="/home/user/openwrt/staging_dir/toolchain-mips_34kc_gcc-4.8-linaro_uClibc-0.9.33.2/bin/mips-openwrt-linux-uclibc-"
+
 flags=(
   --deadCodeElim:on # remove unused code
-#  -d:uClibc         # uClibc-specific code
-#  --os=linux        # target OS
-#  --cpu=mips        # target CPU
+  -d:uClibc         # uClibc-specific code
+  --os=linux        # target OS
+  --cpu=mips        # target CPU
   --verbosity:2     # verbose gcc output log
   -d:ssl            # enable SSL support; enable only when needed: social networks _require_ it; sms may require
 

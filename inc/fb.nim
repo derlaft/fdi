@@ -41,5 +41,5 @@ let
     CheckCode: doFbCheck,
     Enabled: fbEnabled,
     Primary: false,
-    Hosts: @["facebook.com"],
+    Hosts: @["www.facebook.com", "static.xx.fbcdn.net", "m.facebook.com", "staticxx.facebook.com"],
   )
