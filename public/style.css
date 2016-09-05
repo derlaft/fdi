@@ -1,21 +1,49 @@
 html {
     width: 90%;
-    max-width: 400px;
+    max-width: 800px;
     margin: 0 auto; 
     -webkit-text-size-adjust: none;
     text-align: center;
 }
 
-input {
-    text-align: center;
-    font-size: 1.5em;
-    margin-top: 0;
+body {
+  background-image: url('/back.jpg');
+  color: white;
 }
 
-input.phone, input.code {
-    width: 80%;
-    margin-bottom: 0.33em;
+@font-face {
+  font-family: 'Nautilus';
+  src: url('/Nautilus.otf');
 }
+
+.shitty {
+  font-family: 'Nautilus', 'Georgia', serif;
+}
+
+.medium {
+  font-size: 16pt;
+}
+
+.big {
+  font-size: 18pt;
+}
+
+.small {
+  font-size: 14pt;
+}
+
+h1 {
+  font-size: 14pt;
+}
+
+#welcomeback {
+  display: none;
+}
+
+#space {
+ height: 1em; 
+}
+
 
 .error {
     border: thin solid #8b0000;
@@ -30,7 +58,7 @@ input.phone, input.code {
 
 #img {
   height: 10em;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 
 img {
@@ -38,5 +66,66 @@ img {
 }
 
 .snimg {
-    height: 5em;
+    height: 3em;
+}
+
+a + a {
+  margin-left: 2em;
+}
+
+/* h1: text with a line */
+h1 {
+    overflow: hidden;
+    text-align: center;
+    margin-bottom: 0.4em;
+}
+h1:before,
+h1:after {
+    background-color: white;
+    content: "";
+    display: inline-block;
+    height: 1px;
+    position: relative;
+    vertical-align: middle;
+    width: 50%;
+}
+h1:before {
+    right: 0.5em;
+    margin-left: -50%;
+}
+h1:after {
+    left: 0.5em;
+    margin-right: -50%;
+}
+
+/* button inside input */
+input.phone, input.code{
+  border: none;
+  background: none;
+}
+
+input.phone,input.code, .send, .icon {
+    text-align: center;
+    font-size: 1.5em;
+    margin: 0;
+    vertical-align: middle;
+}
+
+input.phone, input.code{
+    width: 80%;
+    height: 100%;
+    margin: 0;
+}
+
+.smoothinput {
+    background: #fedad9;
+    width: 100%;
+    max-width: 25em;
+    margin: 0 auto;
+    border-radius: 1.5em;
+    padding: 5px;
+}
+
+.icon {
+  margin-left: 5px;
 }

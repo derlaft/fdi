@@ -22,9 +22,12 @@ let
  <body>
  <div id="img">
    <a href="http://""" & gatewayHost & """/">
-   <img src="/wifi.svg" alt="" />
+   <img src="/babka.png" alt="" />
    </a>
  </div>
+ <div class="shitty medium">«Наслаждайтесь просторами&nbsp;Интернетов, дорогие&nbsp;мои!»</div>
+ <div class="curve medium">Ваша Нью-Йоркская&nbsp;Бабушка</div>
+ <div id="space"></div>
 """
 
   footer = """
@@ -50,27 +53,21 @@ $header
   }
 
   <div id="info">
-    <p>Согласно законам РФ, для получения доступа к Интернету вы <b>обязаны</b> подтвердить свою личность.</p>
+    <div class="small">Любимое всеми нами законодательство РФ обязывает идентифицировать каждого пользователя перед доступом в публичную Wi-Fi сеть, поэтому</div>
+    <div id="space"></div>
+    <div class="shitty big">Зарегистрируйтесь, дорогие мои!</div>
+
     $if smsEnabled or okEnabled or fbEnabled or vkEnabled {
-      <p>Это можно сделать следующими способами:</p>
+        <h1>Войдите через</h1>
     }
+
     $else {
-      <p>Нет доступных способов подтверждения личности. Доступ в интернет отключен.</p>
+      <p>Извините, доступ в сеть временно отключен</p>
     }
   </div>
 
-  $if smsEnabled {
-    <div id="phone-cap">По номеру телефона:</div>
-    <form action="/sms_redirect" method="get">
-      <input class="phone" required name="phone" type="text" pattern="7[0-9]{10}" placeholder="79991237733">
-      <input type="submit" value="Отправить">
-    </form>
-  }
-
   $if vkEnabled or okEnabled or fbEnabled {
     <div id="socnetworks">
-      <p>При помощи социальных сетей:</p>
-
       $if vkEnabled {
         <a href="http://$gatewayHost/vk_redirect"><img class="snimg" src="/vk.png" alt="Вконтакте" /></a>
       }
@@ -82,8 +79,22 @@ $header
       $if fbEnabled and ctx.revisited {
         <a href="http://$gatewayHost/fb_redirect"><img class="snimg" src="/fb.png" alt="Facebook" /></a>
       }
+
+      <h1>или</h1>
     </div>
   }
+
+  $if smsEnabled {
+    <div id="phone-cap">По номеру телефона:</div>
+    <form action="/sms_redirect" method="get">
+      <div class="smoothinput">
+        <img class="icon" src="/phone.png" alt="">
+        <input class="phone" required name="phone" type="text" pattern="7[0-9]{10}" placeholder="79991237733">
+        <input class="send" type="image" alt="->" src="/send.png">
+      </div>
+    </form>
+  }
+
 </div>
 $footer
 """
@@ -100,8 +111,11 @@ $header
     <p>Введите код, отправленный при помоши SMS-сообщения:</p>
     <form action="/sms_callback" method="get">
         <input name="phone" type="hidden" value="$phone">
-        <input class="code" required name="code" type="text" pattern="[0-9]{5}" placeholder="12345">
-        <input type="submit" value="OK">
+        <div class="smoothinput">
+          <img class="icon" src="/letter.png" alt="">
+          <input class="code" required name="code" type="text" pattern="[0-9]{5}" placeholder="12345">
+          <input class="send" type="image" alt="->" src="/send.png">
+        </div>
     </form>
   </div>
 $footer
