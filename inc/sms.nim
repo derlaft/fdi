@@ -18,8 +18,13 @@ let
 const
   SMS_LIMITER = "smslimit"
 
+proc stripPhone(phone: string): string =
+  var stripped = phone.split({' ', '(', ')', '-'}).join("")
+  stripped
 
-proc correctPhone(phone: string): bool = phone.match(re"^7[0-9]{10}$")
+proc correctPhone(phone: string): bool = 
+  D("Check? $1" % phone)
+  phone.match(re"^7[0-9]{10}$")
 
 proc generateCode(): int = (10000 + random(89999))
 
@@ -44,7 +49,7 @@ proc sendSMS(phone, message: string): SmsSendResult =
 
 proc getSMSRedirect(parameters: StringTableRef): Redirect {.procvar.} =
 
-  let phone = parameters["phone"]
+  let phone = "7" & stripPhone(parameters["phone"])
 
   # ignore bad numbers
   if not correctPhone(phone):
@@ -72,7 +77,7 @@ proc getSMSRedirect(parameters: StringTableRef): Redirect {.procvar.} =
 
 proc doSMSCheck(parameters: StringTableRef): CheckCode {.procvar.} =
 
-  let phone = parameters["phone"]
+  let phone = stripPhone(parameters["phone"])
   # ignore bad numbers; really necessary because we keep both codes and tries in myLittleRedis
   if not correctPhone(phone):
     return CheckCode(error: "Incorrect phone number")

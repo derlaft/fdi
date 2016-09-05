@@ -6,18 +6,25 @@ html {
     text-align: center;
 }
 
-body {
-  background-image: url('/back.jpg');
-  color: white;
-}
-
 @font-face {
   font-family: 'Nautilus';
   src: url('/Nautilus.otf');
 }
 
+@font-face {
+  font-family: 'Helvetica';
+  src: url('/Helvetica.otf');
+}
+
+body {
+  background-image: url('/back.jpg');
+  color: white;
+  font-family: 'Helvetica', serif;
+}
+
+
 .shitty {
-  font-family: 'Nautilus', 'Georgia', serif;
+  font-family: 'Nautilus', serif;
 }
 
 .medium {
@@ -32,6 +39,10 @@ body {
   font-size: 14pt;
 }
 
+.curved {
+  font-style: italic;
+}
+
 h1 {
   font-size: 14pt;
 }
@@ -41,13 +52,15 @@ h1 {
 }
 
 #space {
- height: 1em; 
+ height: 1em;
 }
 
 
 .error {
-    border: thin solid #8b0000;
-    background: #ffc0cb;
+    color: black;
+    border: none;
+    background: #fedad9;
+    border-radius: 1.5em;
     margin: 20px;
     padding: 20px;
 }
@@ -117,15 +130,61 @@ input.phone, input.code{
     margin: 0;
 }
 
+.smoothinputcontainer {
+  margin-left: 0.1em;
+  margin-right: 1em;
+}
+
 .smoothinput {
     background: #fedad9;
+    border-radius: 1.5em;
     width: 100%;
     max-width: 25em;
     margin: 0 auto;
-    border-radius: 1.5em;
     padding: 5px;
 }
 
 .icon {
   margin-left: 5px;
+}
+
+@media screen and (max-width: 30em) {
+    .phone, .code {
+      font-size: 1em !important;
+    }
+    .icon {
+      display: none;
+    }
+    .send {
+      height: 1em !important;
+    }
+    a + a {
+      margin-left: 0.1em !important;
+    }
+}
+
+@media screen and (max-width: 15em) {
+    .phone, .code {
+      font-size: 0.5em !important;
+    }
+    .send {
+      height: 0.5em !important;
+    }
+    a + a {
+      margin-left: 0 !important;
+    }
+    .snimg {
+        height: 1.5em;
+    }
+    .big {
+      font-size: 9pt;
+    }
+
+    .small {
+      font-size: 8pt;
+    }
+
+    .logo {
+      margin: 0 !important;
+    }
 }

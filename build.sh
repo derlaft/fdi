@@ -4,9 +4,6 @@ CROSS="/home/user/openwrt/staging_dir/toolchain-mips_34kc_gcc-4.8-linaro_uClibc-
 
 flags=(
   --deadCodeElim:on # remove unused code
-  -d:uClibc         # uClibc-specific code
-  --os=linux        # target OS
-  --cpu=mips        # target CPU
   --verbosity:2     # verbose gcc output log
   -d:ssl            # enable SSL support; enable only when needed: social networks _require_ it; sms may require
 
@@ -22,6 +19,9 @@ if [[ "$1" == 'release' ]]; then
 		-d:release					# enable release mode (disables various checks and etc)
     --passL="-Os -flto" # enable flto on linker time
 		--opt:size					# optimeze for size
+    -d:uClibc         # uClibc-specific code
+    --os=linux        # target OS
+    --cpu=mips        # target CPU
   )
 fi
 

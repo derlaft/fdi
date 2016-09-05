@@ -115,7 +115,8 @@ routes:
       # success! allow internet access and all the stuff
       allowInternetAccess request.ip
 
-      if request.cookies.hasKey("from"):
+      if request.cookies.hasKey("from") and 
+        (not request.cookies["from"].contains(gatewayHost)):
         redirect request.cookies["from"]
       else:
         redirect website

@@ -20,14 +20,22 @@ let
    <link rel="stylesheet" href="style.css">
  </head>
  <body>
+ <script src="/jquery.js"></script>
+ <script src="/masked.js"></script>
+ <script>
+jQuery(function($){
+   $(".phone").mask("(999) 999-99-99");
+});
+</script>
+
  <div id="img">
    <a href="http://""" & gatewayHost & """/">
-   <img src="/babka.png" alt="" />
+   <img class="logo" src="/babka.png" alt="" />
    </a>
  </div>
- <div class="shitty medium">«Наслаждайтесь просторами&nbsp;Интернетов, дорогие&nbsp;мои!»</div>
- <div class="curve medium">Ваша Нью-Йоркская&nbsp;Бабушка</div>
- <div id="space"></div>
+   <div class="shitty medium">«Наслаждайтесь просторами Интернетов, дорогие&nbsp;мои!»</div>
+   <div class="curved medium">Ваша Нью-Йоркская Бабушка</div>
+   <div id="space"></div>
 """
 
   footer = """
@@ -85,12 +93,13 @@ $header
   }
 
   $if smsEnabled {
-    <div id="phone-cap">По номеру телефона:</div>
     <form action="/sms_redirect" method="get">
-      <div class="smoothinput">
-        <img class="icon" src="/phone.png" alt="">
-        <input class="phone" required name="phone" type="text" pattern="7[0-9]{10}" placeholder="79991237733">
-        <input class="send" type="image" alt="->" src="/send.png">
+      <div class="smoothinputcontainer">
+        <div class="smoothinput">
+          <img class="icon" src="/phone.png" alt="">
+          <input class="phone" required name="phone" type="text" placeholder="(915) 800-35-55">
+          <input class="send" type="image" alt="->" src="/send.png">
+        </div>
       </div>
     </form>
   }
@@ -111,10 +120,12 @@ $header
     <p>Введите код, отправленный при помоши SMS-сообщения:</p>
     <form action="/sms_callback" method="get">
         <input name="phone" type="hidden" value="$phone">
-        <div class="smoothinput">
-          <img class="icon" src="/letter.png" alt="">
-          <input class="code" required name="code" type="text" pattern="[0-9]{5}" placeholder="12345">
-          <input class="send" type="image" alt="->" src="/send.png">
+        <div class="smoothinputcontainer">
+          <div class="smoothinput">
+            <img class="icon" src="/letter.png" alt="">
+            <input class="code" required name="code" type="text" pattern="[0-9]{5}" placeholder="12345">
+            <input class="send" type="image" alt="->" src="/send.png">
+          </div>
         </div>
     </form>
   </div>
