@@ -6,6 +6,7 @@ html {
     text-align: center;
 }
 
+
 @font-face {
   font-family: 'Nautilus';
   src: url('/Nautilus.otf');
@@ -19,12 +20,12 @@ html {
 body {
   background-image: url('/back.jpg');
   color: white;
-  font-family: 'Helvetica', serif;
+  font-family: 'Helvetica';
 }
 
 
 .shitty {
-  font-family: 'Nautilus', serif;
+  font-family: 'Nautilus';
 }
 
 .medium {
@@ -131,26 +132,49 @@ input.phone, input.code{
 }
 
 .smoothinputcontainer {
-  margin-left: 0.1em;
-  margin-right: 1em;
+  margin-left: 5px;
+  margin-right: 15px;
+  width: 100%;
+  max-width: 25em;
+  margin: 0 auto;
 }
 
 .smoothinput {
     background: #fedad9;
     border-radius: 1.5em;
-    width: 100%;
-    max-width: 25em;
-    margin: 0 auto;
     padding: 5px;
+    width: auto;
 }
 
 .icon {
   margin-left: 5px;
 }
 
+.logo_small {
+  display: none;
+}
+
+@media screen and (max-width: 750px) {
+  .logo {
+    width: 100%;
+    height: auto;
+  }
+  #img {
+    height: auto;
+  }
+}
+
 @media screen and (max-width: 30em) {
+    .logo {
+      display: none;
+    }
+    .logo_small {
+      display: block;
+      margin: 0 auto;
+      max-width: 100%;
+    }
     .phone, .code {
-      font-size: 1em !important;
+      font-size: 12pt !important;
     }
     .icon {
       display: none;
@@ -161,11 +185,14 @@ input.phone, input.code{
     a + a {
       margin-left: 0.1em !important;
     }
+  html {
+      width: 100% !important;
+  }
 }
 
 @media screen and (max-width: 15em) {
     .phone, .code {
-      font-size: 0.5em !important;
+      font-size: 10pt !important;
     }
     .send {
       height: 0.5em !important;
@@ -177,14 +204,31 @@ input.phone, input.code{
         height: 1.5em;
     }
     .big {
-      font-size: 9pt;
+      font-size: 11pt;
     }
 
     .small {
-      font-size: 8pt;
+      font-size: 10pt;
     }
 
     .logo {
       margin: 0 !important;
+    }
+}
+
+@media screen and (max-width: 11em) {
+    .phone, .code {
+      font-size: 6pt !important;
+    }
+    /* word wrap */
+    div {
+      overflow-wrap: normal;
+      word-wrap: normal;
+      word-break: normal;
+      line-break: auto;
+      -webkit-hyphens: auto; -ms-hyphens: auto; hyphens: auto;
+    }
+    h1:before, h1:after {
+      display: none;
     }
 }

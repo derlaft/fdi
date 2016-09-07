@@ -19,7 +19,7 @@ let
    <title>Интернет</title>
    <link rel="stylesheet" href="style.css">
  </head>
- <body>
+ <body lang="ru">
  <script src="/jquery.js"></script>
  <script src="/masked.js"></script>
  <script>
@@ -30,7 +30,8 @@ jQuery(function($){
 
  <div id="img">
    <a href="http://""" & gatewayHost & """/">
-   <img class="logo" src="/babka.png" alt="" />
+   <img class="logo" src="/logo_big.png" alt="" />
+   <img class="logo_small" src="/logo.png" alt="" />
    </a>
  </div>
    <div class="shitty medium">«Наслаждайтесь просторами Интернетов, дорогие&nbsp;мои!»</div>
