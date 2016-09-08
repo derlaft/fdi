@@ -7,14 +7,14 @@ const
   hashtail = "nohashextensionaрttack"
 
   # command to enable internet access for a user
-  setmark = "iptables -t mangle -A PREROUTING" &
-    " -m mac --mac-source $$(cat /proc/net/arp | grep '^$1 ' | awk '{print $$4}')" &
-    " -p tcp -j MARK --set-mark 0x1"
+  setmark = """/bin/sh -c "iptables -t mangle -A PREROUTING \
+    -m mac --mac-source $$(cat /proc/net/arp | grep '^$1 ' | awk '{print $$4}') \
+    -p tcp -j MARK --set-mark 0x1" """
 
-  allowIPcmd = "iptables -I zone_$3_forward" &
-    " -m mac --mac-source $$(cat /proc/net/arp | grep '^$1 ' | awk '{print $$4}')" &
-    " -m time --utc --datestop  $4" &
-    " -p tcp -d $2 --dport 443 -j ACCEPT"
+  allowIPcmd = """/bin/sh -c "iptables -I zone_$3_forward \
+    -m mac --mac-source $$(cat /proc/net/arp | grep '^$1 ' | awk '{print $$4}') \
+    -m time --utc --datestop  $4 \
+    -p tcp -d $2 --dport 443 -j ACCEPT" """
 
 type
   Redirect* = ref object

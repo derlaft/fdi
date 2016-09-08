@@ -106,7 +106,7 @@ routes:
       if auth.Primary: # save identity
         setCookie("id", res.id, daysForward(365 * 5))
         setCookie("sign", cryptoHash(res.id), daysForward(365 * 5))
-        if not remoteLog("Id: $1;\t\t\t\t\tIp addr: $2" % [res.id, request.ip]):
+        if not remoteLog("Id: $1;\tIp addr: $2" % [res.id, request.ip]):
           redirect errorRedirect "Could not log"
       else:
         if not remoteLog("Id: $1;\tSecondary Id: $2;\tIp addr: $3" % [request.cookies["id"], res.id, request.ip]):
@@ -115,8 +115,7 @@ routes:
       # success! allow internet access and all the stuff
       allowInternetAccess request.ip
 
-      if request.cookies.hasKey("from") and 
-        (not request.cookies["from"].contains(gatewayHost)):
+      if request.cookies.hasKey("from") and (not request.cookies["from"].contains(gatewayHost)):
         redirect request.cookies["from"]
       else:
         redirect website
