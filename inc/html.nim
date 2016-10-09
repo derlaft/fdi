@@ -14,7 +14,7 @@ let
 <html lang="en">
  <head>
    <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0,minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
    <meta name="HandheldFriendly" content="true">
    <title>Интернет</title>
    <link rel="stylesheet" href="style.css">
@@ -24,7 +24,7 @@ let
  <script src="/masked.js"></script>
  <script>
 jQuery(function($){
-   $(".phone").mask("(999) 999-99-99");
+   $(".phone").mask("+7 (999) 999-99-99");
 });
 </script>
 
@@ -98,7 +98,7 @@ $header
       <div class="smoothinputcontainer">
         <div class="smoothinput">
           <img class="icon" src="/phone.png" alt="">
-          <input class="phone" required name="phone" type="text" placeholder="(915) 800-35-55">
+          <input class="phone" required name="phone" type="text" placeholder="+7 (915) 800-35-55" size="18">
           <input class="send" type="image" alt="->" src="/send.png">
         </div>
       </div>
@@ -124,11 +124,19 @@ $header
         <div class="smoothinputcontainer">
           <div class="smoothinput">
             <img class="icon" src="/letter.png" alt="">
-            <input class="code" required name="code" type="text" pattern="[0-9]{5}" placeholder="12345">
+            <input class="code" required name="code" type="text" pattern="[0-9]{5}" placeholder="12345" size="5">
             <input class="send" type="image" alt="->" src="/send.png">
           </div>
         </div>
     </form>
+  </div>
+$footer
+"""
+
+proc allOk*(): string = tmpli html"""
+$header
+  <div id="class">
+    <div class="shitty big">Отлично! Можно пользоваться интернетом.</div>
   </div>
 $footer
 """

@@ -18,9 +18,7 @@ let
 const
   SMS_LIMITER = "smslimit"
 
-proc stripPhone(phone: string): string =
-  var stripped = phone.split({' ', '(', ')', '-'}).join("")
-  stripped
+proc stripPhone(phone: string): string = phone.split({' ', '(', ')', '-', '+'}).join("")
 
 proc correctPhone(phone: string): bool = 
   D("Check? $1" % phone)
@@ -49,7 +47,7 @@ proc sendSMS(phone, message: string): SmsSendResult =
 
 proc getSMSRedirect(parameters: StringTableRef): Redirect {.procvar.} =
 
-  let phone = "7" & stripPhone(parameters["phone"])
+  let phone = stripPhone(parameters["phone"])
 
   # ignore bad numbers
   if not correctPhone(phone):

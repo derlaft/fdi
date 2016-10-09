@@ -20,7 +20,8 @@ html {
 body {
   background-image: url('/back.jpg');
   color: white;
-  font-family: 'Helvetica';
+  /*font-family: 'Helvetica'; */
+  font-family: serif;
 }
 
 
@@ -29,15 +30,15 @@ body {
 }
 
 .medium {
-  font-size: 16pt;
+  font-size: x-large;
 }
 
 .big {
-  font-size: 18pt;
+  font-size: xx-large;
 }
 
 .small {
-  font-size: 14pt;
+  font-size: large;
 }
 
 .curved {
@@ -120,21 +121,19 @@ input.phone, input.code{
 
 input.phone,input.code, .send, .icon {
     text-align: center;
-    font-size: 1.5em;
+    font-size: 15px;
     margin: 0;
     vertical-align: middle;
 }
 
 input.phone, input.code{
-    width: 80%;
-    height: 100%;
     margin: 0;
 }
 
 .smoothinputcontainer {
   margin-left: 5px;
   margin-right: 15px;
-  width: 100%;
+  display: inline-block;
   max-width: 25em;
   margin: 0 auto;
 }
@@ -173,9 +172,6 @@ input.phone, input.code{
       margin: 0 auto;
       max-width: 100%;
     }
-    .phone, .code {
-      font-size: 12pt !important;
-    }
     .icon {
       display: none;
     }
@@ -190,12 +186,9 @@ input.phone, input.code{
   }
 }
 
-@media screen and (max-width: 15em) {
-    .phone, .code {
-      font-size: 10pt !important;
-    }
+@media (max-width: 600px) {
     .send {
-      height: 0.5em !important;
+      height: 1em !important;
     }
     a + a {
       margin-left: 0 !important;
@@ -203,23 +196,17 @@ input.phone, input.code{
     .snimg {
         height: 1.5em;
     }
-    .big {
-      font-size: 11pt;
-    }
-
-    .small {
-      font-size: 10pt;
-    }
 
     .logo {
       margin: 0 !important;
     }
+
+    input.phone,input.code, .send, .icon {
+        font-size: big !important; 
+    }
 }
 
-@media screen and (max-width: 11em) {
-    .phone, .code {
-      font-size: 6pt !important;
-    }
+@media (max-width: 300px) {
     /* word wrap */
     div {
       overflow-wrap: normal;
@@ -231,4 +218,9 @@ input.phone, input.code{
     h1:before, h1:after {
       display: none;
     }
+
+    input.phone,input.code, .send, .icon {
+        font-size: 10px;
+    }
+
 }

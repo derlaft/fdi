@@ -1,0 +1,6 @@
+# list of needed openwrt deps
+
+libpthread
+librt
+libopenssl
+libpcre

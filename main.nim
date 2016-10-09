@@ -67,7 +67,7 @@ routes:
     cond thisHost false
     headers["Cache-Control"] = "no-store"
     headers["Connection"] = "close"
-    redirect "http://$1/?from=$2" % [config.gatewayHost, %%(redirectedFrom request)]
+    redirect "http://$1/" % config.gatewayHost
 
   # oauth step1 (redirect to outside login page)
   get re"^\/(.*)_redirect$":
@@ -83,8 +83,11 @@ routes:
       redirect errorRedirect res.error
     else:
       # redirecting! do the stuff and redirect
-      for host in auth.Hosts:
-        allowIP(who=request.ip, what=host)
+      if auth.Hosts != nil:
+        let cmdResult = allowIP(who=request.ip, what=auth.Hosts)
+        if cmdResult != 0:
+          redirect errorRedirect "Could not allow social networks IP"
+
       redirect res.url
 
   # oauth step2 (redirected from outside login page; must check supplied code)
@@ -113,18 +116,20 @@ routes:
           redirect errorRedirect "Could not log"
 
       # success! allow internet access and all the stuff
-      allowInternetAccess request.ip
+      let cmdResult = allowInternetAccess request.ip
+      if cmdResult != 0:
+        redirect errorRedirect "Could not allow access"
 
-      if request.cookies.hasKey("from") and (not request.cookies["from"].contains(gatewayHost)):
-        redirect request.cookies["from"]
-      else:
-        redirect website
+      redirect website
 
   # we are self SMS-oauth provider -- serve code enter page
   get "/sms_code":
     when SMS_ENABLED: # save binary size if it's disabled
       cond smsEnabled
       resp html.smsCode(@"phone", @"error")
+
+  get "/good":
+    resp html.allOk()
 
 randomize() # make sure codes are always different
 

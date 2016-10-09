@@ -1,4 +1,4 @@
-import secureHash, cgi, strutils, os, times, strtabs
+import secureHash, cgi, strutils, os, times, strtabs, osproc
 
 import ./config
 
@@ -8,13 +8,18 @@ const
 
   # command to enable internet access for a user
   setmark = """/bin/sh -c "iptables -t mangle -A PREROUTING \
-    -m mac --mac-source $$(cat /proc/net/arp | grep '^$1 ' | awk '{print $$4}') \
+    -m mac --mac-source $1 \
     -p tcp -j MARK --set-mark 0x1" """
 
-  allowIPcmd = """/bin/sh -c "iptables -I zone_$3_forward \
-    -m mac --mac-source $$(cat /proc/net/arp | grep '^$1 ' | awk '{print $$4}') \
-    -m time --utc --datestop  $4 \
-    -p tcp -d $2 --dport 443 -j ACCEPT" """
+  allowIPcmd = """/bin/sh -c "for host in $2; do
+    for port in 80 443; do
+    iptables -I zone_$3_forward \
+    -m mac --mac-source $1 \
+    -m time --utc --datestop $4 \
+    -p tcp -d \$$host --dport \$$port -j ACCEPT; done; done" """
+
+  getMACfromARP = """/bin/sh -c "cat /proc/net/arp | grep '^$1 ' | tr ' ' '\n' | grep :" """
+  getMACcmd = """/bin/sh -c "arping -I wlan0 $1 -c1 | tr ' ' '\n' | grep : | tr -d '[]' | grep :" """
 
 type
   Redirect* = ref object
@@ -55,20 +60,50 @@ proc osExec(cmd: string): int =
   else:
     execShellCmd(cmd)
 
+proc stripNewline(str: string): string = str.split(NewLines).join("")
 
-proc allowInternetAccess*(ip: string) =
-  discard osExec(setmark % ip)
+proc resolveMac(ip: string): string =
+
+  let (mac, errC) = execCmdEx( getMACfromARP % ip )
+
+  if errC == 0 and mac != "00:00:00:00:00:00":
+    return stripNewline(mac)
+
+  for tries in countdown(5, 1):
+
+    let (pingedMac, exitCode) = execCmdEx(getMACcmd % ip)
+
+    D("TRY $1: got $2" % [$tries, $exitCode])
+    if exitCode == 0:
+      return stripNewline(pingedMac)
+
+  return nil
+
+proc allowInternetAccess*(ip: string): int =
+
+  let mac = resolveMac(ip)
+  if mac == nil:
+    return 1
+
+  osExec(setmark % mac)
 
 proc date*(): string = format(getLocaltime(getTime()), "ddMMMMyyyy")
 
 # allow ip access (port 443) for 2 minutes
-proc allowIP*(who, what: string)  =
+proc allowIP*(who: string, what: seq[string]): int =
+
+  let whatString = what.join(" ")
 
   let allowUpTo = format( getGMTime((getTime() + 2.minutes)), "yyyy-MM-dd'T'HH:mm")
 
-  discard osExec(allowIPcmd % [
-    who, # ip address of sender
-    what, # ip address we allow access for
+  let mac = resolveMac(who)
+  if mac == nil:
+    return 1
+
+  osExec(allowIPcmd % [
+    mac, # mac address of sender
+    whatString, # ip address we allow access for
     zone, # firewall zone
     allowUpTo
   ])
+
