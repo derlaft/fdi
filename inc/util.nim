@@ -7,7 +7,7 @@ const
   hashtail = "nohashextensionaрttack"
 
   # command to enable internet access for a user
-  setmark = """/bin/sh -c "iptables -t mangle -A PREROUTING \
+  setmark = """/bin/sh -c "iptables -t nat -I PREROUTING \
     -m mac --mac-source $1 \
     -p tcp -j MARK --set-mark 0x1" """
 

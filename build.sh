@@ -13,9 +13,9 @@ flags=(
   -d:with_ok
   -d:with_fb
 
-    -d:uClibc         # uClibc-specific code
-    --os=linux        # target OS
-    --cpu=mips        # target CPU
+#    -d:uClibc         # uClibc-specific code
+#    --os=linux        # target OS
+#    --cpu=mips        # target CPU
 )
 
 if [[ "$1" == 'release' ]]; then
