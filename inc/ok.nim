@@ -46,7 +46,11 @@ proc doOkCheck(parameters: StringTableRef): CheckCode {.procvar.} =
     let URL = okCheckURL % [okAppID, okAppSecret, okRedirectURL, code]
     let res = parseJson(request(url=URL, timeout=defaultTimeout, httpMethod=httpPOST).body)
 
-    let access_token = ($res.getOrDefault("access_token")).okStrip()
+    let at = res.getOrDefault("access_token")
+    if at == nil:
+      return CheckCode(id: "ok", error: "Nil token")
+
+    let access_token = ($at).okStrip()
     D("Acess token=$1; checking" % access_token)
     let user_id = getOkUID(access_token)
 

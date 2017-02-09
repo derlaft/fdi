@@ -53,6 +53,7 @@ when OK_ENABLED:
 
 routes:
   get "/":
+    headers["Connection"] = "close"
     if request.params.hasKey("from"):
       setCookie("from", @"from", daysForward(1))
 
@@ -64,6 +65,7 @@ routes:
 
   # redirect rule (any transparent-proxied URL will be redirected to our host 
   get re".*":
+    headers["Connection"] = "close"
     cond thisHost false
     headers["Cache-Control"] = "no-store"
     headers["Connection"] = "close"
@@ -71,6 +73,7 @@ routes:
 
   # oauth step1 (redirect to outside login page)
   get re"^\/(.*)_redirect$":
+    headers["Connection"] = "close"
     cond thisHost
     let auth = methods[request.matches[0]]
     # well; first check is not really needed -- it generates exception
@@ -92,6 +95,7 @@ routes:
 
   # oauth step2 (redirected from outside login page; must check supplied code)
   get re"^\/(.*)_callback$":
+    headers["Connection"] = "close"
     cond thisHost
     let auth = methods[request.matches[0]]
     cond auth != nil and auth.Enabled
@@ -124,11 +128,13 @@ routes:
 
   # we are self SMS-oauth provider -- serve code enter page
   get "/sms_code":
+    headers["Connection"] = "close"
     when SMS_ENABLED: # save binary size if it's disabled
       cond smsEnabled
       resp html.smsCode(@"phone", @"error")
 
   get "/good":
+    headers["Connection"] = "close"
     resp html.allOk()
 
 randomize() # make sure codes are always different

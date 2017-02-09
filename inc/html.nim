@@ -34,9 +34,6 @@ jQuery(function($){
    <img class="logo_small" src="/logo.png" alt="" />
    </a>
  </div>
-   <div class="shitty medium">«Наслаждайтесь просторами Интернетов, дорогие&nbsp;мои!»</div>
-   <div class="curved medium">Ваша Нью-Йоркская Бабушка</div>
-   <div id="space"></div>
 """
 
   footer = """
@@ -47,6 +44,8 @@ jQuery(function($){
 proc mainPage*(ctx: pageCtx): string = tmpli html"""
 $header
 <div id="class">
+
+  <div class="shitty big">Зарегистрируйтесь, дорогие мои!</div>
 
   $if ctx.error != "" {
     <div class="error">
@@ -62,9 +61,6 @@ $header
   }
 
   <div id="info">
-    <div class="small">Любимое всеми нами законодательство РФ обязывает идентифицировать каждого пользователя перед доступом в публичную Wi-Fi сеть, поэтому</div>
-    <div id="space"></div>
-    <div class="shitty big">Зарегистрируйтесь, дорогие мои!</div>
 
     $if smsEnabled or okEnabled or fbEnabled or vkEnabled {
         <h1>Войдите через</h1>
@@ -98,12 +94,22 @@ $header
       <div class="smoothinputcontainer">
         <div class="smoothinput">
           <img class="icon" src="/phone.png" alt="">
-          <input class="phone" required name="phone" type="text" placeholder="+7 (915) 800-35-55" size="18">
+          <input class="phone" required name="phone" type="text" placeholder="+7 (___) ___-__-__" size="18">
           <input class="send" type="image" alt="->" src="/send.png">
         </div>
       </div>
     </form>
   }
+
+<hr class="line" style="height: 2px;width: 100%;border-color: white;" />
+   <div class="shitty medium">«Наслаждайтесь просторами Интернетов, дорогие&nbsp;мои!»</div>
+   <div class="curved medium">Ваша Нью-Йоркская Бабушка</div>
+   <div id="space"></div>
+
+  <div id="info">
+    <div class="small">Любимое всеми нами законодательство РФ обязывает идентифицировать каждого пользователя перед доступом в публичную Wi-Fi сеть, поэтому зарегистрируйтесь, Дорогие мои!</div>
+    <div id="space"></div>
+  </div>
 
 </div>
 $footer
@@ -129,6 +135,13 @@ $header
           </div>
         </div>
     </form>
+
+   <div id="space"></div>
+      <h1></h1>
+   <div class="shitty medium">«Наслаждайтесь просторами Интернетов, дорогие&nbsp;мои!»</div>
+   <div class="curved medium">Ваша Нью-Йоркская Бабушка</div>
+   <div id="space"></div>
+
   </div>
 $footer
 """

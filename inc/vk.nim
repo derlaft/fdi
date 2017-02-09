@@ -25,13 +25,16 @@ proc doVkCheck(parameters: StringTableRef): CheckCode {.procvar.} =
     let URL = vkCheckURL % [vkAppID, vkAppSecret, vkRedirectURL, code]
     let res = parseJson(request(url=URL, timeout=defaultTimeout).body)
 
-    let access_token = $res.getOrDefault("access_token")
-    let user_id = $res.getOrDefault("user_id")
-
-    if access_token == "":
-      CheckCode(id: "vk", error: "Invalid VK token ($1)" % $res["error_description"])
+    if res == nil:
+      CheckCode(id: "vk", error: "Wuuuut; nil res")
     else:
-      CheckCode(id: "vk$1" % $userID)
+      let access_token = res.getOrDefault("access_token")
+      let user_id = res.getOrDefault("user_id")
+
+      if access_token == nil or $access_token == "":
+        CheckCode(id: "vk", error: "Invalid VK token ($1)" % $res["error_description"])
+      else:
+        CheckCode(id: "vk$1" % $userID)
 
   except:
 

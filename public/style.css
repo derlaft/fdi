@@ -121,9 +121,14 @@ input.phone, input.code{
 
 input.phone,input.code, .send, .icon {
     text-align: center;
-    font-size: 15px;
+    font-size: 20px;
     margin: 0;
     vertical-align: middle;
+}
+
+hr.vertical {
+   width: 0px;
+   height: 0px;
 }
 
 input.phone, input.code{
@@ -143,6 +148,7 @@ input.phone, input.code{
     border-radius: 1.5em;
     padding: 5px;
     width: auto;
+    height: 40px;
 }
 
 .icon {
@@ -151,6 +157,10 @@ input.phone, input.code{
 
 .logo_small {
   display: none;
+}
+
+input.phone,input.code, .send, .icon {
+    height: 2em;
 }
 
 @media screen and (max-width: 750px) {
@@ -188,13 +198,13 @@ input.phone, input.code{
 
 @media (max-width: 600px) {
     .send {
-      height: 1em !important;
+      height: 2em !important;
     }
     a + a {
       margin-left: 0 !important;
     }
     .snimg {
-        height: 2em;
+        height: 4em;
     }
 
     .logo {
@@ -202,7 +212,8 @@ input.phone, input.code{
     }
 
     input.phone,input.code, .send, .icon {
-        font-size: big !important; 
+        font-size: 20px;
+        height: 2em;
     }
 }
 
@@ -220,7 +231,8 @@ input.phone, input.code{
     }
 
     input.phone,input.code, .send, .icon {
-        font-size: 10px;
+        font-size: 13px;
+        height: 2em;
     }
 
 }
