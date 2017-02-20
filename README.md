@@ -12,3 +12,5 @@ Openwrt-based router auth system
 * If everything is OK, you will get an executable named ```main```. Place it, ```gateway.cfg``` and ```public/``` directory to the router.
 * On the router, you will need to install some packages: ```opkg install libpthread librt libopenssl libpcre```
 * Make sure you have enough RAM and disk space. I recommend at least 8Mb disk space. Install ```zram-swap``` package if you are low on mem.
+* Place ```fdi.init``` to ```/etc/init.d/fdi``` to load service with start-up. ```/etcinit.d/fdi enable``` will load the service automatically.
+* Configure ```/etc/config/firewall```. See ```firewall.conf``` as example.
